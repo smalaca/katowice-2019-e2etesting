@@ -1,6 +1,6 @@
 package com.smalaca.systemtests.stories;
 
-import com.smalaca.credit.CreditGrantedScenario;
+import com.smalaca.credit.CreditNotGrantedBikInvalidScenario;
 import com.smalaca.systemtests.JBehaveConfiguration;
 import com.smalaca.systemtests.dto.BankClientDto;
 import com.smalaca.systemtests.dto.CreditResponse;
@@ -11,14 +11,14 @@ import org.jbehave.core.annotations.When;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TakeCreditWhenPossibleStories extends JBehaveConfiguration {
+public class TakeCreditWhenBikInvalidStories extends JBehaveConfiguration {
     private BankClientDto bankClientDto;
     private CreditResponse creditResponse;
 
-    @Given("bank client with a valid BIK history and account in our bank")
-    public void userWithBikAndAccount() {
+    @Given("bank client with account in our bank")
+    public void userWithoutBikAndWithAccount() {
         bankClientDto = new BankClientDto(
-                CreditGrantedScenario.PESEL, CreditGrantedScenario.AMOUNT);
+                CreditNotGrantedBikInvalidScenario.PESEL, CreditNotGrantedBikInvalidScenario.AMOUNT);
     }
 
     @When("wants to get credit")
@@ -30,6 +30,6 @@ public class TakeCreditWhenPossibleStories extends JBehaveConfiguration {
     public void creditGranted() {
         CreditStatus creditStatus = getRestClient().checkCreditStatus(creditResponse);
 
-        assertThat(creditStatus.getStatus()).isEqualTo(CreditGrantedScenario.CREDIT_STATUS);
+        assertThat(creditStatus.getStatus()).isEqualTo(CreditNotGrantedBikInvalidScenario.CREDIT_STATUS);
     }
 }
